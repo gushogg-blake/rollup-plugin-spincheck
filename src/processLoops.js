@@ -49,7 +49,7 @@ function getMax(node) {
 	return max;
 }
 
-// map loop bodies to Loops so we can find the Loop/
+// map loop bodies to Loops so we can find the Loop
 // that a string literal is inside for "spincheck(a, b, c)"; expressions
 let loopMap = new Map();
 
