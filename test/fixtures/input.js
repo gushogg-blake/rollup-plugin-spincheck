@@ -18,6 +18,8 @@ export function singleWhile_1000(n) {
 	while ("spincheck=1000") {
 		i++;
 		
+		"spincheck(i)";
+		
 		if (i === n) {
 			break;
 		}

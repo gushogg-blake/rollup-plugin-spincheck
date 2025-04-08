@@ -24,11 +24,11 @@ Example:
 
 ```typescript
 while ("spincheck=1000") {
-	// this loop will break/throw after 1000 iterations
+    // this loop will break/throw after 1000 iterations
 }
 
 while (someCondition && "spincheck=1000") {
-	// this loop will break/throw after 1000 iterations
+    // this loop will break/throw after 1000 iterations
 }
 ```
 
@@ -40,13 +40,13 @@ Example:
 
 ```typescript
 while ("spincheck=1000") {
-	let first;
-	let last;
-	let current;
-	
-	// ... logic ...
-	
-	"spincheck(first, last, current)";
+    let first;
+    let last;
+    let current;
+    
+    // ... logic ...
+    
+    "spincheck(first, last, current)";
 }
 ```
 
@@ -58,24 +58,24 @@ Since the annotations are just strings, your code is still valid and logically e
 
 ```typescript
 export type Options = {
-	// list of file extensions to scan.
-	// defaults to [".js", ".mjs", ".cjs", ".ts", ".mts", ".cts"]
-	extensions: string[];
-	
-	// whether to include a debugger; statement before throwing/breaking out of the loop
-	// defaults to true
-	debug?: boolean;
-	
-	// whether to show a confirm() dialog for the user to decide whether
-	// to let the loop continue for another round (up to the threshold,
-	// at which point another check will be triggered)
-	// defaults to false
-	prompt?: boolean;
-	
-	// whether to break (potentially allowing code to continue from
-	// wherever the loop got to), or throw an error
-	// defaults to "throw"
-	breakMethod?: "break" | "throw";
+    // list of file extensions to scan.
+    // defaults to [".js", ".mjs", ".cjs", ".ts", ".mts", ".cts"]
+    extensions: string[];
+    
+    // whether to include a debugger; statement before throwing/breaking out of the loop
+    // defaults to true
+    debug?: boolean;
+    
+    // whether to show a confirm() dialog for the user to decide whether
+    // to let the loop continue for another round (up to the threshold,
+    // at which point another check will be triggered)
+    // defaults to false
+    prompt?: boolean;
+    
+    // whether to break (potentially allowing code to continue from
+    // wherever the loop got to), or throw an error
+    // defaults to "throw"
+    breakMethod?: "break" | "throw";
 };
 ```
 
@@ -87,18 +87,18 @@ export type Options = {
 import spincheck from "rollup-plugin-spincheck";
 
 export default {
-	// ...
-	
-	plugins: [
-		// spincheck should come at the end of most JS
-		// transfoms such as typescript, commonjs, etc
-		
-		spincheck({
-			// options
-		}),
-	],
-	
-	// ...
+    // ...
+    
+    plugins: [
+        // spincheck should come at the end of most JS
+        // transfoms such as typescript, commonjs, etc
+        
+        spincheck({
+            // options
+        }),
+    ],
+    
+    // ...
 };
 ```
 
@@ -112,15 +112,15 @@ To address this, I found myself writing things like:
 let i = 0;
 
 while (true) {
-	if (i > 1000) {
-		console.log("Infinite");
-		
-		break;
-	}
-	
-	// algorithm...
-	
-	i++;
+    if (i > 1000) {
+        console.log("Infinite");
+        
+        break;
+    }
+    
+    // algorithm...
+    
+    i++;
 }
 ```
 
@@ -142,9 +142,9 @@ The plugin does a simple string search for `spincheck=` in every module before p
 
 ```javascript
 {
-	debug: true,
-	prompt: true,
-	breakMethod: "throw",
+    debug: true,
+    prompt: true,
+    breakMethod: "throw",
 }
 ```
 
@@ -152,19 +152,19 @@ The plugin does a simple string search for `spincheck=` in every module before p
 
 ```typescript
 export function singleWhile_1000(n) {
-	let i = 0;
-	
-	while ("spincheck=1000") {
-		i++;
-		
-		"spincheck(i)";
-		
-		if (i === n) {
-			break;
-		}
-	}
-	
-	return i;
+    let i = 0;
+    
+    while ("spincheck=1000") {
+        i++;
+        
+        "spincheck(i)";
+        
+        if (i === n) {
+            break;
+        }
+    }
+    
+    return i;
 }
 ```
 
@@ -190,8 +190,8 @@ function singleWhile_1000(n) {
         }
 
         if (i === n) {
-			break;
-		}
+            break;
+        }
         // not used -- just to prevent illegal break statement
         __spincheck_counter_1++;
 
