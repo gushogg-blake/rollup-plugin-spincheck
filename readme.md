@@ -60,7 +60,7 @@ while ("spincheck=1000") {
 
 This will generate an array of three `{first, last, current}` objects before breaking.
 
-Since the annotations are just strings, your code is still valid and logically equivalent (since strings are truthy) if spincheck isn't applied for some reason.
+Since the annotations are just strings, your code is still valid and logically equivalent (since strings are truthy) if Spincheck isn't applied for some reason.
 
 ### Options
 
