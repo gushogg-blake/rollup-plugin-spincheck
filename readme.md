@@ -190,9 +190,8 @@ function singleWhile_1000(n) {
         }
 
         if (i === n) {
-            break;
-        }
-        // not used -- just to prevent illegal break statement
+			break;
+		}
         __spincheck_counter_1++;
 
         if (__spincheck_counter_1 > 1000) {

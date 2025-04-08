@@ -56,8 +56,10 @@ export default class Loop {
 	getIncrementAndCheck() {
 		let {options, id, max, counterVar, debugInfoVar} = this;
 		
+		// while loop not used -- just required to parse code with
+		// a break statement
 		return recast.parse(`
-			while (false) { // not used -- just to prevent illegal break statement
+			while (false) {
 				${counterVar}++;
 				
 				if (${counterVar} > ${max}) {
@@ -68,7 +70,7 @@ export default class Loop {
 					let {stack} = o;
 					
 					console.log("Possible infinite loop\\n");
-					console.log("Debug info from last 3 loops:\\n");
+					console.log("Debug info from last three loops:\\n");
 					console.log(${debugInfoVar});
 					
 					if (${JSON.stringify(options.prompt)} && confirm("Possible infinite loop detected after ${max} iterations. Continue?\\n\\nStack trace:\\n\\n" + stack)) {
