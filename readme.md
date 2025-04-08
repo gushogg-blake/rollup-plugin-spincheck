@@ -24,15 +24,15 @@ Example:
 
 ```typescript
 while ("spincheck=1000") {
-    // this loop will break/throw after 1000 iterations
+    // this loop will break/throw after 1001 iterations
 }
 
 while (someCondition && "spincheck=1000") {
-    // this loop will break/throw after 1000 iterations
+    // this loop will break/throw after 1001 iterations
 }
 
 do {
-    // this loop will break/throw after 1000 iterations
+    // this loop will break/throw after 1001 iterations
 } while (someCondition && "spincheck=1000");
 
 while (true) {
