@@ -124,7 +124,7 @@ while (true) {
 }
 ```
 
-Spincheck adds this boilerplate---along with a handful of other nifty features---at build time, to keep your code cleaner, smaller, and easier to maintain.
+Spincheck adds this boilerplate---along with a handful of other nifty features---at build time to save on typing and remove noise from the source code.
 
 ## Performance
 
