@@ -30,6 +30,14 @@ while ("spincheck=1000") {
 while (someCondition && "spincheck=1000") {
     // this loop will break/throw after 1000 iterations
 }
+
+do {
+    // this loop will break/throw after 1000 iterations
+} while (someCondition && "spincheck=1000");
+
+while (true) {
+    // this loop will not be modified
+}
 ```
 
 You can also include `"spincheck(var1, var2, ...)";` expression statements to collect debug information for three iterations before breaking.
