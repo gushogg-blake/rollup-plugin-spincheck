@@ -1,4 +1,5 @@
 import * as recast from "recast";
+import {throwMessage} from "./constants.js";
 //import type {Options} from "./spincheck";
 
 /*
@@ -56,29 +57,31 @@ export default class Loop {
 		let {options, id, max, counterVar, debugInfoVar} = this;
 		
 		return recast.parse(`
-			${counterVar}++;
-			
-			if (${counterVar} > ${max}) {
-				${options.debug ? `debugger;` : ""}
+			while (false) { // not used -- just to prevent illegal break statement
+				${counterVar}++;
 				
-				let o = {};
-				Error.captureStackTrace(o, platform.loop);
-				let {stack} = o;
-				
-				console.log("Possible infinite loop\\n");
-				console.log("Debug info from last 3 loops:\\n");
-				console.log(${debugInfoVar});
-				
-				if (confirm("Possible infinite loop detected after ${max} iterations. Continue?\\n\\nStack trace:\\n\\n" + stack)) {
-					${counterVar} = 0;
-				} else {
-					${
-						options.breakMethod === "throw"
-						? `throw new Error("spincheck: breaking out of possible infinite loop");`
-						: `break;`
+				if (${counterVar} > ${max}) {
+					${options.debug ? `debugger;` : ""}
+					
+					let o = {};
+					Error.captureStackTrace(o);
+					let {stack} = o;
+					
+					console.log("Possible infinite loop\\n");
+					console.log("Debug info from last 3 loops:\\n");
+					console.log(${debugInfoVar});
+					
+					if (${JSON.stringify(options.prompt)} && confirm("Possible infinite loop detected after ${max} iterations. Continue?\\n\\nStack trace:\\n\\n" + stack)) {
+						${counterVar} = 0;
+					} else {
+						${
+							options.breakMethod === "throw"
+							? `throw new Error("${throwMessage}");`
+							: `break;`
+						}
 					}
 				}
 			}
-		`).program.body;
+		`).program.body[0].body.body;
 	}
 }

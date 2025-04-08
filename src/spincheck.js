@@ -41,7 +41,7 @@ export default function(options) {
 				sourceFileName: id,
 			});
 			
-			processLoops(ast);
+			processLoops(options, ast);
 			
 			let {code: transformedCode, map} = recast.print(ast, {
 				sourceMapName: id,

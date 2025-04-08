@@ -1,3 +1,4 @@
+import * as recast from "recast";
 //import type {Options} from "./spincheck";
 import Loop from "./Loop.js";
 
@@ -73,7 +74,7 @@ function processLoop(options, path) {
 	addIncrementAndCheck(loop, path);
 }
 
-export default function processLoops(options, ast): void {
+export default function processLoops(options, ast) {
 	recast.visit(ast, {
 		visitWhileStatement(path) {
 			processLoop(options, path);
