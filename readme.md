@@ -134,7 +134,7 @@ Spincheck adds initialisers for a counter variable and a debug array above every
 
 ### Build time
 
-The plugin does a simple string search for `spincheck=` in every module before processing it in order to avoid parsing overhead in files that don't have any annotated loops. For modules with (potential) annotated loops, the transform is done using [recast](https://github.com/benjamn/recast).
+The plugin does a simple string search for `spincheck=` in every module before processing it in order to avoid parsing overhead in files that don't have any annotated loops. For modules with annotated loops, the transform is done using [recast](https://github.com/benjamn/recast).
 
 ## Transform example
 
