@@ -135,3 +135,85 @@ Spincheck adds initialisers for a counter variable and a debug array above every
 ### Build time
 
 The plugin does a simple string search for `spincheck=` in every module before processing it in order to avoid parsing overhead in files that don't have any annotated loops. For modules with (potential) annotated loops, the transform is done using [recast](https://github.com/benjamn/recast).
+
+## Transform example
+
+### Options
+
+```javascript
+{
+	debug: true,
+	prompt: true,
+	breakMethod: "throw",
+}
+```
+
+### Input
+
+```typescript
+export function singleWhile_1000(n) {
+	let i = 0;
+	
+	while ("spincheck=1000") {
+		i++;
+		
+		"spincheck(i)";
+		
+		if (i === n) {
+			break;
+		}
+	}
+	
+	return i;
+}
+```
+
+### Output
+
+```javascript
+function singleWhile_1000(n) {
+    let i = 0;
+
+    let __spincheck_counter_1 = 0;
+    let __spincheck_debug_1 = [];
+
+    while ("spincheck=1000") {
+        i++;
+
+        if (__spincheck_counter_1 > 997) {
+            try {
+                __spincheck_debug_1.push({i});
+            } catch (e) {
+                console.log("spincheck: error encountered when trying to add debug info:");
+                console.error(e);
+            }
+        }
+
+        if (i === n) {
+			break;
+		}
+        // not used -- just to prevent illegal break statement
+        __spincheck_counter_1++;
+
+        if (__spincheck_counter_1 > 1000) {
+            debugger;
+            
+            let o = {};
+            Error.captureStackTrace(o);
+            let {stack} = o;
+            
+            console.log("Possible infinite loop\n");
+            console.log("Debug info from last 3 loops:\n");
+            console.log(__spincheck_debug_1);
+            
+            if (confirm("Possible infinite loop detected after 1000 iterations. Continue?\n\nStack trace:\n\n" + stack)) {
+                __spincheck_counter_1 = 0;
+            } else {
+                throw new Error("spincheck: breaking out of possible infinite loop");
+            }
+        }
+    }
+
+    return i;
+}
+```
