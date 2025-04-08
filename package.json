@@ -1,0 +1,37 @@
+{
+	"name": "rollup-plugin-spincheck",
+	"author": {
+		"name": "Gus Hogg-Blake",
+		"email": "gus@gushogg-blake.com"
+	},
+	"description": "Rollup plugin to add debug instrumentation to potentially infinite loops",
+	"version": "0.5.0",
+	"type": "module",
+	"license": "MIT",
+	"repository": "https://github.com/gushogg-blake/rollup-plugin-spincheck",
+	"main": "src/index.js",
+	"scripts": {},
+	"dependencies": {
+		"@babel/parser": "^7.27.0",
+		"@rollup/pluginutils": "^5.1.4",
+		"recast": "^0.23.11"
+	},
+	"devDependencies": {
+		"rollup": "^4.0.0"
+	},
+	"peerDependencies": {
+		"rollup": "^4.0.0"
+	},
+	"peerDependenciesMeta": {
+		"rollup": {
+			"optional": true
+		}
+	},
+	"keywords": [
+		"rollup",
+		"plugin",
+		"check",
+		"infinite",
+		"loop"
+	]
+}

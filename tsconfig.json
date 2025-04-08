@@ -1,0 +1,28 @@
+{
+	"include": [
+		"src/**/*",
+		"test/**/*",
+	],
+	
+	"compilerOptions": {
+		"declaration": true,
+		"skipLibCheck": true,
+		
+		// latest
+		"target": "es2024",
+		
+		// simpler logic for whether to include imports in emitted code
+		// if import type, drop, otherwise keep.
+		"verbatimModuleSyntax": true,
+		
+		// allow extensionless relative imports (otherwise requires .js)
+		// Bun supports this when running directly
+		"moduleResolution": "bundler",
+		
+		"sourceMap": true,
+		
+		// we don't copy the TS files anywhere, so this is needed to
+		// bundle the source with the maps so we can see it in devtools
+		"inlineSources": true,
+	},
+}
