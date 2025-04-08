@@ -1,5 +1,5 @@
 import * as recast from "recast";
-import type {Options} from "./spincheck";
+//import type {Options} from "./spincheck";
 
 /*
 object representing a do/while loop with helpers for generating
@@ -8,18 +8,18 @@ the code to insert
 
 export default class Loop {
 	// plugin options
-	optins: Options;
+	//options: Options;
 	
 	// id to create unique variable names
-	id: number;
+	//id: number;
 	
 	// max iterations this loop is allowed
-	max: number;
+	//max: number;
 	
-	private counterVar: string;
-	private debugInfoVar: string;
+	//private counterVar: string;
+	//private debugInfoVar: string;
 	
-	constructor(options: Options, id: number, max: number) {
+	constructor(options, id, max) {
 		this.options = options;
 		this.id = id;
 		this.max = max;
@@ -32,7 +32,7 @@ export default class Loop {
 	// wrap in if for perf and try-catch in case of bugs
 	// we allow 3 loops before breaking to collect debug info
 	
-	getDebugRecorder(debugInfo: string) {
+	getDebugRecorder(debugInfo) {
 		return recast.parse(`
 			if (${this.counterVar} > ${this.max - 3}) {
 				try {

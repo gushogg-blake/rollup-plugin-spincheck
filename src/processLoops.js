@@ -1,5 +1,5 @@
-import type {Options} from "./spincheck";
-import Loop from "./Loop";
+//import type {Options} from "./spincheck";
+import Loop from "./Loop.js";
 
 let _id = 0;
 
@@ -7,7 +7,7 @@ function nextId() {
 	return ++_id;
 }
 
-function addInitialiser(loop: Loop, path) {
+function addInitialiser(loop, path) {
 	let nodes = loop.getInitialiser();
 	
 	for (let node of nodes) {
@@ -15,7 +15,7 @@ function addInitialiser(loop: Loop, path) {
 	}
 }
 
-function addIncrementAndCheck(loop: Loop, path) {
+function addIncrementAndCheck(loop, path) {
 	let nodes = loop.getIncrementAndCheck();
 	
 	for (let node of nodes) {
@@ -58,7 +58,7 @@ add the initialiser (counter and debug info vars) and check
 debug statements ("spincheck(a, b, c)";) are converted in a separate step
 */
 
-function processLoop(path) {
+function processLoop(options, path) {
 	let max = getMax(path.node.test);
 	
 	if (max === null) {
@@ -73,16 +73,16 @@ function processLoop(path) {
 	addIncrementAndCheck(loop, path);
 }
 
-export default function processLoops(ast): void {
+export default function processLoops(options, ast): void {
 	recast.visit(ast, {
 		visitWhileStatement(path) {
-			processLoop(path);
+			processLoop(options, path);
 			
 			this.traverse(path);
 		},
 		
 		visitDoWhileStatement(path) {
-			processLoop(path);
+			processLoop(options, path);
 			
 			this.traverse(path);
 		},

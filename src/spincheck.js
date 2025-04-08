@@ -1,16 +1,16 @@
 import * as recast from "recast";
 import * as parser from "recast/parsers/babel.js";
 import {createFilter} from "@rollup/pluginutils";
-import processLoops from "./processLoops";
+import processLoops from "./processLoops.js";
 
-export type Options = {
-	extensions: string[];
-	debug?: boolean;
-	prompt?: boolean;
-	breakMethod?: "break" | "throw";
-};
+//export type Options = {
+//	extensions: string[];
+//	debug?: boolean;
+//	prompt?: boolean;
+//	breakMethod?: "break" | "throw";
+//};
 
-export default function(options: Partial<Options> = {}) {
+export default function(options) {
 	options = {
 		extensions: [".js", ".mjs", ".cjs", ".ts", ".mts", ".cts"],
 		debug: true,
@@ -25,7 +25,7 @@ export default function(options: Partial<Options> = {}) {
 	return {
 		name: "spincheck",
 		
-		transform(code: string, id: string) {
+		transform(code, id) {
 			if (!filter(id)) {
 				return;
 			}
