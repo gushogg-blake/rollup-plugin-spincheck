@@ -1,34 +1,7 @@
 import {suite, test, before} from "node:test";
 import assert from "node:assert";
-import fs from "node:fs";
-import {rollup} from "rollup";
-import spincheck from "../src/index.js";
 import {throwMessage} from "../src/constants.js";
-
-let _moduleId = 0;
-
-async function createModule(breakMethod) {
-	let name = "output_" + (++_moduleId) + ".js";
-	
-	let bundle = await rollup({
-		input: "test/fixtures/input.js",
-		
-		plugins: [
-			spincheck({
-				debug: false,
-				prompt: false,
-				breakMethod,
-			}),
-		],
-	});
-	
-	await bundle.write({
-		format: "es",
-		file: "test/fixtures/" + name,
-	});
-	
-	return await import("./fixtures/" + name);
-}
+import {createModule} from "./utils.js";
 
 suite("spincheck", async function() {
 	suite("breakMethod = throw", function() {
