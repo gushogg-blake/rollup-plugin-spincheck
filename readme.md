@@ -12,7 +12,7 @@ Spincheck tries to make it as easy as possible to start debugging with useful in
 
 - With `prompt` (off by default), you can prompt the user to break or continue.
 
-- With `"spincheck(var1, var2, ...)";` annotations you can collect context/debug info for 3 iterations before breaking. These will be logged to the console, so will be available even if you didn't have dev tools open beforehand.
+- With `"spincheck(var1, var2, ...)";` annotations you can collect context/debug info for three iterations before breaking. These will be logged to the console, so will be available even if you didn't have dev tools open beforehand.
 
 ## Usage
 
@@ -32,7 +32,7 @@ while (someCondition && "spincheck=1000") {
 }
 ```
 
-You can also include `"spincheck(var1, var2, ...)";` expression statements to collect debug information for 3 iterations before breaking.
+You can also include `"spincheck(var1, var2, ...)";` expression statements to collect debug information for three iterations before breaking.
 
 The provided variables will be converted to an object and added to an array, which will be logged to the console.
 
@@ -50,7 +50,7 @@ while ("spincheck=1000") {
 }
 ```
 
-This will generate an array of 3 `{first, last, current}` objects before breaking.
+This will generate an array of three `{first, last, current}` objects before breaking.
 
 Since the annotations are just strings, your code is still valid and logically equivalent (since strings are truthy) if spincheck isn't applied for some reason.
 
@@ -130,7 +130,7 @@ Spincheck adds this boilerplate---along with a handful of other nifty features--
 
 ### Runtime
 
-Spincheck adds initialisers for a counter variable and a debug array above every annotated loop and uses lightweight constructs to trigger the break, so shouldn't have a meaningful impact on performance. No function calls are made until the break point and nothing is added to the array until 3 loops before the breakpoint.
+Spincheck adds initialisers for a counter variable and a debug array above every annotated loop and uses lightweight constructs to trigger the break, so shouldn't have a meaningful impact on performance. No function calls are made until the break point and nothing is added to the array until three loops before the breakpoint.
 
 ### Build time
 
@@ -203,7 +203,7 @@ function singleWhile_1000(n) {
             let {stack} = o;
             
             console.log("Possible infinite loop\n");
-            console.log("Debug info from last 3 loops:\n");
+            console.log("Debug info from last three loops:\n");
             console.log(__spincheck_debug_1);
             
             if (confirm("Possible infinite loop detected after 1000 iterations. Continue?\n\nStack trace:\n\n" + stack)) {
