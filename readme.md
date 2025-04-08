@@ -104,7 +104,7 @@ export default {
 
 ## Purpose
 
-When writing complex algorithms it's often required to search a tree or do some other kind of iteration where infinite loops are possible. In these cases a freeze is the least desirable result, as it's usually impossible to know which part of the code is in an infinite loop.
+When writing complex algorithms it's often required to search a tree or do some other kind of iteration where infinite loops are possible. In these cases a freeze is the least desirable result, as it's usually impossible even to know which part of the code is in an infinite loop.
 
 To address this, I found myself writing things like:
 
