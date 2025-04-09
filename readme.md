@@ -47,7 +47,7 @@ while (`spincheck=${inputSize * 10}`) {
 
 Dynamic `spincheck=${max}` expressions are only evaluated once, before the loop begins.
 
-## Logs
+### Logs
 
 You can include `"spincheck(var1, var2, ...)";` expression statements to collect debug information for three iterations before breaking.
 
