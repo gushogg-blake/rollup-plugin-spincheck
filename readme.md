@@ -138,7 +138,7 @@ Spincheck adds this boilerplate---along with a handful of other nifty features--
 
 ### Runtime
 
-Spincheck adds initialisers for a counter variable and a debug array above every annotated loop and uses lightweight constructs to trigger the break, so shouldn't have a meaningful impact on performance. No function calls are made until the break point and nothing is added to the array until three loops before the breakpoint.
+Spincheck adds initialisers for a counter variable and a debug array above every annotated loop and uses lightweight constructs to trigger the break, so shouldn't have a meaningful impact on performance. No function calls are made until the break point and nothing is added to the array until three loops before the break point.
 
 ### Build time
 
