@@ -45,7 +45,7 @@ while (`spincheck=${inputSize * 10}`) {
 }
 ```
 
-Dynamic `\`spincheck=${max}\`` expressions will be converted to a static string in the loop condition to avoid evaluating them on every iteration.
+Dynamic ``spincheck=${max}`` expressions will be converted to a static string in the loop condition to avoid evaluating them on every iteration.
 
 You can also include `"spincheck(var1, var2, ...)";` expression statements to collect debug information for three iterations before breaking.
 
