@@ -3,7 +3,7 @@ import spincheck from "../src/index.js";
 
 let _moduleId = 0;
 
-export async function createModule(breakMethod) {
+export async function createModule() {
 	let name = "output_" + (++_moduleId) + ".js";
 	
 	let bundle = await rollup({
@@ -13,7 +13,6 @@ export async function createModule(breakMethod) {
 			spincheck({
 				debug: false,
 				prompt: false,
-				breakMethod,
 			}),
 		],
 	});

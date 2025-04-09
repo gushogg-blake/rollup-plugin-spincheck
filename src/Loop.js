@@ -76,11 +76,7 @@ export default class Loop {
 					if (${JSON.stringify(options.prompt)} && confirm("Possible infinite loop detected after ${max} iterations. Continue?\\n\\nStack trace:\\n\\n" + stack)) {
 						${counterVar} = 0;
 					} else {
-						${
-							options.breakMethod === "throw"
-							? `throw new Error("${throwMessage}");`
-							: `break;`
-						}
+						throw new Error("${throwMessage}");
 					}
 				}
 			}

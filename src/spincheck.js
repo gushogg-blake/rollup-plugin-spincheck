@@ -7,7 +7,6 @@ import processLoops from "./processLoops.js";
 //	extensions: string[];
 //	debug?: boolean;
 //	prompt?: boolean;
-//	breakMethod?: "break" | "throw";
 //};
 
 export default function(options) {
@@ -15,7 +14,6 @@ export default function(options) {
 		extensions: [".js", ".mjs", ".cjs", ".ts", ".mts", ".cts"],
 		debug: true,
 		prompt: false,
-		breakMethod: "throw",
 		...options,
 	};
 	
