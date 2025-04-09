@@ -24,15 +24,15 @@ Example:
 
 ```typescript
 while ("spincheck=1000") {
-    // this loop will break/throw after 1001 iterations
+    // this loop will throw after 1001 iterations
 }
 
 while (someCondition && "spincheck=1000") {
-    // this loop will break/throw after 1001 iterations
+    // this loop will throw after 1001 iterations
 }
 
 do {
-    // this loop will break/throw after 1001 iterations
+    // this loop will throw after 1001 iterations
 } while (someCondition && "spincheck=1000");
 
 while (true) {
@@ -97,7 +97,7 @@ export type Options = {
     // defaults to [".js", ".mjs", ".cjs", ".ts", ".mts", ".cts"]
     extensions: string[];
     
-    // whether to include a debugger; statement before throwing/breaking out of the loop
+    // whether to include a debugger; statement before breaking
     // defaults to true
     debug?: boolean;
     
