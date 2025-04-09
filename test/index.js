@@ -52,4 +52,18 @@ suite("spincheck", async function() {
 			message: throwMessage,
 		});
 	});
+	
+	test("dynamic max", async function() {
+		assert.doesNotThrow(function() {
+			let n = module.dynamic_10xInput(10, 100);
+			
+			assert.equal(n, 100);
+		});
+		
+		assert.throws(function() {
+			module.dynamic_10xInput(10, 102);
+		}, {
+			message: throwMessage,
+		});
+	});
 });

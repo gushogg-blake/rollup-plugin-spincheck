@@ -40,7 +40,24 @@ function getMax(node) {
 				return false;
 			}
 			
-			max = Number(match[1]);
+			max = recast.parse(match[1]).program.body[0].expression;
+			
+			return false;
+		},
+		
+		visitTemplateLiteral(path) {
+			let {expressions, quasis} = path.node;
+			
+			if (
+				quasis.length !== 2
+				|| !quasis[0].value.raw.match(/^spincheck\s*=\s*/)
+				|| quasis[1].value.raw !== ""
+				|| expressions.length !== 1
+			) {
+				return false;
+			}
+			
+			max = expressions[0];
 			
 			return false;
 		},
@@ -74,6 +91,63 @@ function processLoop(options, path) {
 	addIncrementAndCheck(loop, path);
 }
 
+function findAnnotatedLoopAncestor(path) {
+	while (path) {
+		if (loopMap.has(path.node)) {
+			return loopMap.get(path.node);
+		}
+		
+		path = path.parent;
+	}
+	
+	return null;
+}
+
+function convertStringToLog(path) {
+	let {expression} = path.node;
+	let str = expression.value;
+	let match = str.match(/^spincheck\(([\w\s,]+)\)$/);
+	
+	if (match) {
+		let loop = findAnnotatedLoopAncestor(path.parent);
+		
+		if (loop) {
+			let ast = recast.parse("({" + match[1] + "})");
+			let debugExpression = ast.program.body[0].expression;
+			
+			path.replace(loop.getDebugRecorder(debugExpression));
+			
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+function convertTemplateToLog(path) {
+	let {expressions, quasis} = path.node.expression;
+	
+	if (
+		quasis.length !== 2
+		|| quasis[0].value.raw !== "spincheck("
+		|| quasis[1].value.raw !== ")"
+		|| expressions.length !== 1
+	) {
+		return false;
+	}
+	
+	let value = expressions[0];
+	let loop = findAnnotatedLoopAncestor(path.parent);
+	
+	if (loop) {
+		path.replace(loop.getDebugRecorder(value));
+		
+		return true;
+	}
+	
+	return false;
+}
+
 export default function processLoops(options, ast) {
 	recast.visit(ast, {
 		visitWhileStatement(path) {
@@ -88,37 +162,17 @@ export default function processLoops(options, ast) {
 			this.traverse(path);
 		},
 		
-		// replace "spincheck(a, b, c)"; statements with logs
+		// convert "spincheck(a, b, c)"; and `spincheck(${{a, b, c}})`; statements
 		
 		visitExpressionStatement(path) {
 			let {expression} = path.node;
 			
-			if (expression.type !== "StringLiteral") {
-				return false;
-			}
-			
-			let str = expression.value;
-			let match = str.match(/^spincheck\(([\w\s,]+)\)$/);
-			
-			if (match) {
-				let debugInfo = match[1];
-				
-				let parent = path.parent;
-				let loop = null;
-				
-				while (parent) {
-					if (loopMap.has(parent.node)) {
-						loop = loopMap.get(parent.node);
-						
-						break;
-					}
-					
-					parent = parent.parent;
+			if (expression.type === "StringLiteral") {
+				if (convertStringToLog(path)) {
+					return false;
 				}
-				
-				if (loop) {
-					path.replace(loop.getDebugRecorder(debugInfo));
-					
+			} else if (expression.type === "TemplateLiteral") {
+				if (convertTemplateToLog(path)) {
 					return false;
 				}
 			}

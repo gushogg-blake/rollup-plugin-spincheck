@@ -60,3 +60,35 @@ export function nestedWhiles_10_20(n1, n2) {
 	
 	return {a, b};
 }
+
+export function dynamic_10xInput(inputSize, breakAfter) {
+	let i = 0;
+	
+	while (`spincheck=${inputSize * 10}`) {
+		i++;
+		
+		"spincheck(i)";
+		
+		if (i === breakAfter) {
+			break;
+		}
+	}
+	
+	return i;
+}
+
+export function dynamicLog(n) {
+	let i = 0;
+	
+	while ("spincheck=1000") {
+		i++;
+		
+		`spincheck(${i})`;
+		
+		if (i === n) {
+			break;
+		}
+	}
+	
+	return i;
+}
