@@ -88,6 +88,8 @@ In either case, the expression is parsed at build time to ensure syntactical cor
 ```typescript
 export type Options = {
     // list of file extensions to scan.
+    // if you use TypeScript, make sure to keep the .ts extensions
+    // as the module IDs seen by the plugin will still have .ts extensions.
     // defaults to [".js", ".mjs", ".cjs", ".ts", ".mts", ".cts"]
     extensions: string[];
     
@@ -115,7 +117,7 @@ export default {
     
     plugins: [
         // spincheck should come at the end of most JS
-        // transfoms such as typescript, commonjs, etc
+        // transforms such as typescript, commonjs, etc
         
         spincheck({
             // options
