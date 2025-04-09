@@ -38,6 +38,11 @@ do {
 while (true) {
     // this loop will not be modified
 }
+
+// a dynamic max iterations value can be specified with a template literal:
+while (`spincheck=${inputSize * 10}`) {
+    // this loop's max iterations depends on the input size
+}
 ```
 
 You can also include `"spincheck(var1, var2, ...)";` expression statements to collect debug information for three iterations before breaking.
@@ -62,6 +67,22 @@ This will generate an array of three `{first, last, current}` objects before bre
 
 Since the annotations are just strings, your code is still valid and logically equivalent (since strings are truthy) if Spincheck isn't applied for some reason.
 
+Log annotations also support template literals, in which case a single expression must be provided:
+
+```typescript
+while ("spincheck=1000") {
+    let first;
+    let last;
+    let current;
+    
+    // ... logic ...
+    
+    `spincheck(${{first, last, current}})`;
+}
+```
+
+In either case, the expression is parsed at build time to ensure syntactical correctness and the log call is wrapped in a try-catch to guard against reference errors.
+
 ### Options
 
 ```typescript
@@ -79,11 +100,6 @@ export type Options = {
     // at which point another check will be triggered)
     // defaults to false
     prompt?: boolean;
-    
-    // whether to break (potentially allowing code to continue from
-    // wherever the loop got to), or throw an error
-    // defaults to "throw"
-    breakMethod?: "break" | "throw";
 };
 ```
 
@@ -152,7 +168,6 @@ The plugin does a simple string search for `spincheck=` in every module before p
 {
     debug: true,
     prompt: true,
-    breakMethod: "throw",
 }
 ```
 
@@ -182,13 +197,14 @@ export function singleWhile_1000(n) {
 function singleWhile_1000(n) {
     let i = 0;
 
+    let __spincheck_max_1 = 1000;
     let __spincheck_counter_1 = 0;
     let __spincheck_debug_1 = [];
 
     while ("spincheck=1000") {
         i++;
 
-        if (__spincheck_counter_1 > 997) {
+        if (__spincheck_counter_1 > __spincheck_max_1 - 3) {
             try {
                 __spincheck_debug_1.push({i});
             } catch (e) {
@@ -202,7 +218,7 @@ function singleWhile_1000(n) {
 		}
         __spincheck_counter_1++;
 
-        if (__spincheck_counter_1 > 1000) {
+        if (__spincheck_counter_1 > __spincheck_max_1) {
             debugger;
             
             let o = {};
@@ -213,7 +229,7 @@ function singleWhile_1000(n) {
             console.log("Debug info from last three loops:\n");
             console.log(__spincheck_debug_1);
             
-            if (confirm("Possible infinite loop detected after 1000 iterations. Continue?\n\nStack trace:\n\n" + stack)) {
+            if (confirm("Possible infinite loop detected after " + __spincheck_max_1 + " iterations. Continue?\n\nStack trace:\n\n" + stack)) {
                 __spincheck_counter_1 = 0;
             } else {
                 throw new Error("spincheck: breaking out of possible infinite loop");
