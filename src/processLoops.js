@@ -24,6 +24,17 @@ function addIncrementAndCheck(loop, path) {
 	}
 }
 
+function templateIsSpincheck(node) {
+	let {expressions, quasis} = node;
+	
+	return (
+		quasis.length === 2
+		&& quasis[0].value.raw.match(/^spincheck\s*=\s*/)
+		&& quasis[1].value.raw === ""
+		&& expressions.length === 1
+	);
+}
+
 /*
 parse the max from the "spincheck=N" condition
 */
@@ -46,18 +57,11 @@ function getMax(node) {
 		},
 		
 		visitTemplateLiteral(path) {
-			let {expressions, quasis} = path.node;
-			
-			if (
-				quasis.length !== 2
-				|| !quasis[0].value.raw.match(/^spincheck\s*=\s*/)
-				|| quasis[1].value.raw !== ""
-				|| expressions.length !== 1
-			) {
+			if (!templateIsSpincheck(path.node)) {
 				return false;
 			}
 			
-			max = expressions[0];
+			max = path.node.expressions[0];
 			
 			return false;
 		},
@@ -178,6 +182,21 @@ export default function processLoops(options, ast) {
 			}
 			
 			this.traverse(path);
+		},
+		
+		// convert dynamic spincheck= expressions to strings to avoid
+		// evaluating them on every iteration
+		
+		visitTemplateLiteral(path) {
+			if (templateIsSpincheck(path.node)) {
+				let replacement = recast.parse(`v="spincheck=dynamic"`).program.body[0].expression.right;
+				
+				path.replace(replacement);
+				
+				return false;
+			}
+			
+			this.traverse();
 		},
 	});
 }
