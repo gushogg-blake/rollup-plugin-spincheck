@@ -47,7 +47,9 @@ while (`spincheck=${inputSize * 10}`) {
 
 Dynamic `spincheck=${max}` expressions will be converted to a static string in the loop condition to avoid evaluating them on every iteration.
 
-You can also include `"spincheck(var1, var2, ...)";` expression statements to collect debug information for three iterations before breaking.
+## Logs
+
+You can include `"spincheck(var1, var2, ...)";` expression statements to collect debug information for three iterations before breaking.
 
 The provided variables will be converted to an object and added to an array, which will be logged to the console.
 
