@@ -38,14 +38,21 @@ do {
 while (true) {
     // this loop will not be modified
 }
+```
 
-// a dynamic max iterations value can be specified with a template literal:
+#### Dynamic expressions
+
+A dynamic max iterations value can be specified with a template literal:
+
+```javascript
 while (`spincheck=${inputSize * 10}`) {
     // this loop's max iterations depends on the input size
 }
 ```
 
 Dynamic `spincheck=${max}` expressions are only evaluated once, before the loop begins.
+
+**Note:** If you are using TypeScript, the compiler may complain about regular strings always being truthy. Template strings aren't affected as of version 5.8.2, so you can use a template string with a constant expression to avoid this error: `spincheck=${1000}`.
 
 ### Logs
 
@@ -164,11 +171,11 @@ Spincheck adds initialisers for a counter variable and a debug array above every
 
 ### Build time
 
-The plugin does a simple string search for `spincheck=` in every module before processing it in order to avoid parsing overhead in files that don't have any annotated loops. For modules with annotated loops, the transform is done using [recast](https://github.com/benjamn/recast).
+The plugin does a simple string search for `spincheck` in every module before processing it in order to avoid parsing overhead in files that don't have any annotated loops. For modules with annotated loops, the transform is done using [recast](https://github.com/benjamn/recast).
 
 ## Transform example
 
-### Options
+Options:
 
 ```javascript
 {
@@ -177,7 +184,7 @@ The plugin does a simple string search for `spincheck=` in every module before p
 }
 ```
 
-### Input
+Input:
 
 ```typescript
 export function singleWhile_1000(n) {
@@ -197,7 +204,7 @@ export function singleWhile_1000(n) {
 }
 ```
 
-### Output
+Output:
 
 ```javascript
 function singleWhile_1000(n) {
