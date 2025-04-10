@@ -102,7 +102,7 @@ export type Options = {
     // if you use TypeScript, make sure to keep the .ts extensions
     // as the module IDs seen by the plugin will still have .ts extensions.
     // defaults to [".js", ".mjs", ".cjs", ".ts", ".mts", ".cts"]
-    extensions: string[];
+    extensions?: string[];
     
     // whether to include a debugger; statement before breaking
     // defaults to true

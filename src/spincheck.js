@@ -4,7 +4,7 @@ import {createFilter} from "@rollup/pluginutils";
 import processLoops from "./processLoops.js";
 
 //export type Options = {
-//	extensions: string[];
+//	extensions?: string[];
 //	debug?: boolean;
 //	prompt?: boolean;
 //};
