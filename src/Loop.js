@@ -63,9 +63,9 @@ export default class Loop {
 		let {max} = this;
 		
 		let ast = recast.parse(`
-			let ${this.maxVar} = "placeholder_max";
+			const ${this.maxVar} = "placeholder_max";
+			const ${this.debugInfoVar} = [];
 			let ${this.counterVar} = 0;
-			let ${this.debugInfoVar} = [];
 		`);
 		
 		recast.visit(ast, {
@@ -93,9 +93,9 @@ export default class Loop {
 				if (${counterVar} > ${maxVar}) {
 					${options.debug ? `debugger;` : ""}
 					
-					let o = {};
+					const o = {};
 					Error.captureStackTrace(o);
-					let {stack} = o;
+					const {stack} = o;
 					
 					console.log("Possible infinite loop\\n");
 					console.log("Debug info from last three loops:\\n");

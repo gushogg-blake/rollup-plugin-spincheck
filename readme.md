@@ -50,7 +50,7 @@ while (`spincheck=${inputSize * 10}`) {
 }
 ```
 
-Dynamic `spincheck=${max}` expressions are only evaluated once, before the loop begins.
+Dynamic `spincheck=${max}` expressions can use any value that's in scope for the while condition. They will be assigned to a `const` just before the loop, and will only be evaluated once.
 
 **Note:** If you are using TypeScript, the compiler may complain about regular strings always being truthy. Template strings aren't affected as of version 5.8.2, so you can use a template string with a constant expression to avoid this error: `spincheck=${1000}`.
 
