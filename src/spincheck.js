@@ -30,7 +30,7 @@ export default function(options) {
 			
 			// quick check to see if there are any loops to process
 			// can avoid parsing if not
-			if (!code.includes("spincheck=")) {
+			if (!code.includes("spincheck")) {
 				return;
 			}
 			
