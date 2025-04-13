@@ -210,9 +210,9 @@ Output:
 function singleWhile_1000(n) {
     let i = 0;
 
-    let __spincheck_max_1 = 1000;
+    const __spincheck_max_1 = 1000;
+    const __spincheck_debug_1 = [];
     let __spincheck_counter_1 = 0;
-    let __spincheck_debug_1 = [];
 
     while ("spincheck=1000") {
         i++;
@@ -234,9 +234,9 @@ function singleWhile_1000(n) {
         if (__spincheck_counter_1 > __spincheck_max_1) {
             debugger;
             
-            let o = {};
+            const o = {};
             Error.captureStackTrace(o);
-            let {stack} = o;
+            const {stack} = o;
             
             console.log("Possible infinite loop\n");
             console.log("Debug info from last three loops:\n");
