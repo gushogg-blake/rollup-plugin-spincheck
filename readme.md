@@ -227,8 +227,8 @@ function singleWhile_1000(n) {
         }
 
         if (i === n) {
-			break;
-		}
+            break;
+        }
         __spincheck_counter_1++;
 
         if (__spincheck_counter_1 > __spincheck_max_1) {
