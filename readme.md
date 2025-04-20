@@ -167,11 +167,15 @@ Spincheck adds this boilerplate---along with a handful of other nifty features--
 
 ### Runtime
 
-Spincheck adds initialisers for a counter variable and a debug array above every annotated loop and uses lightweight constructs to trigger the break, so shouldn't have a meaningful impact on performance. No function calls are made until the break point and nothing is added to the array until three loops before the break point.
+Spincheck adds initialisers for a counter variable and a debug array above every annotated loop and uses lightweight constructs to trigger the break, so shouldn't have a meaningful impact on performance.
+
+No function calls are made until the break point and nothing is added to the array until three loops before the break point.
 
 ### Build time
 
-The plugin does a simple string search for `spincheck` in every module before processing it in order to avoid parsing overhead in files that don't have any annotated loops. For modules with annotated loops, the transform is done using [recast](https://github.com/benjamn/recast).
+The plugin does a simple string search for `spincheck` in every module before processing it, in order to avoid parsing overhead in files that don't have any annotated loops.
+
+For modules with annotated loops, the transform is done using [recast](https://github.com/benjamn/recast).
 
 ## Transform example
 
